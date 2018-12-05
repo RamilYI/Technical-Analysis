@@ -105,9 +105,5 @@ namespace Technical_Analysis
         //    return point;
 
         //}
-        private void ExitButton_OnClick(object sender, RoutedEventArgs e)
-        {
-            Close();
-        }
     }
 }
