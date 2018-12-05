@@ -89,6 +89,11 @@ namespace Technical_Analysis
             zedGraph.Invalidate();
         }
 
+        private void exitButton_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
         //private static PointPairList testZed()
         //{
         //    PointPairList point = new PointPairList();
