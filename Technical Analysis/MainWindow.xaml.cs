@@ -79,6 +79,12 @@ namespace Technical_Analysis
             pane.Fill = new Fill(Color.White, Color.FromArgb(220, 220, 255), 45.0f);
             pane.XAxis.Type = AxisType.DateAsOrdinal;
             pane.XAxis.Scale.Min = new XDate(01,12,2017);
+            pane.XAxis.Title.Text = "Дата";
+            pane.YAxis.Title.Text = "Цена";
+            string CsvFileName;
+            TechAnalysisVM setCsvFile = new TechAnalysisVM();
+            setCsvFile.getCsvFile(out CsvFileName);
+            pane.Title.Text = CsvFileName;
             zedGraph.AxisChange();
             zedGraph.Invalidate();
         }
@@ -94,5 +100,9 @@ namespace Technical_Analysis
         //    return point;
 
         //}
+        private void ExitButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
     }
 }

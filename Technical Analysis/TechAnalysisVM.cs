@@ -32,7 +32,7 @@ namespace Technical_Analysis
 
         //public object OxyStorage2 { get; set; }
 
-
+        private static string buf;
         private List<Tuple<DateTime, double, double, double, double, double>> arrayForDataGrid =
             new List<Tuple<DateTime, double, double, double, double, double>>();
 
@@ -61,8 +61,14 @@ namespace Technical_Analysis
                     .ToArray();
                 TransformToArray(csvArray);
             }
+
+            buf = Path.GetFileNameWithoutExtension(csvFile.FileName);
         }
-        
+
+        internal void getCsvFile(out string csvFileName)
+        {
+            csvFileName = buf;
+        }
 
         internal void TransformToArray(string[] pseudoArray)
         {

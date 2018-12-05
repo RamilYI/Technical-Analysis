@@ -121,6 +121,6 @@
                 </Grid>
             </TabItem>
         </TabControl>
-        <Button x:Name="exitButton" Content="Выход" Grid.Column="1" Grid.Row="2" Height="20"  HorizontalAlignment="Right"  VerticalAlignment="Center" Margin="0,0,10,0" Width="58"/>
+        <Button x:Name="exitButton" Content="Выход" Grid.Column="1" Grid.Row="2" Height="20"  HorizontalAlignment="Right"  VerticalAlignment="Center" Margin="0,0,10,0" Width="58" Click="ExitButton_OnClick"/>
     </Grid>
 </Window>
