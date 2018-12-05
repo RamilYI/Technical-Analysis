@@ -4,7 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Technical_Analysis"
+        xmlns:oxy="http://oxyplot.org/wpf"
         xmlns:zed="clr-namespace:ZedGraph;assembly=ZedGraph"
+        xmlns:sparrow="http://sparrowtoolkit.codeplex.com/wpf"
+        xmlns:winformchart="clr-namespace:System.Windows.Forms.DataVisualization.Charting;assembly=System.Windows.Forms.DataVisualization"
         mc:Ignorable="d"
         Title="MainWindow" Height="603.425" Width="1200">
     <Window.DataContext>
@@ -14,24 +17,21 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="0.2*"></RowDefinition>
+            <RowDefinition Height="0.1*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"></ColumnDefinition>
-            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="0.27*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Button Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Content="Загрузить" Height="20"  HorizontalAlignment="Left"  VerticalAlignment="Center" Margin="10,0,0,0"  Command="{Binding ButtonCommand}" />
-        <Button Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Content="Обновить"  Height="20" HorizontalAlignment="Left"  VerticalAlignment="Center" Margin="90,0,0,0" Click="ButtonBase_OnClick" />
-        <DataGrid Grid.Column="1" Grid.Row="0" Name="DataGrid"  ItemsSource="{Binding datagridStorage, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Stretch" HorizontalAlignment="Left" Margin="10" Width="350">
+        <Button Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Content="Загрузить" Height="20"  HorizontalAlignment="Left"  VerticalAlignment="Center" Margin="10,0,0,5"  Command="{Binding ButtonCommand}" />
+        <Button Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Content="Обновить"  Height="20" HorizontalAlignment="Left"  VerticalAlignment="Center" Margin="90,0,0,5" Click="ButtonBase_OnClick" />
+        <DataGrid Grid.Column="1" Grid.Row="0" Name="DataGrid"  ItemsSource="{Binding datagridStorage, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Stretch" HorizontalAlignment="Left" Margin="5" Width="350">
         </DataGrid>
-        <WindowsFormsHost Grid.Column="0" Grid.Row="0" Name="Host" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10">
+        <WindowsFormsHost Grid.Column="0" Grid.Row="0" Name="Host" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5">
             <zed:ZedGraphControl Name="zedGraph"/>
         </WindowsFormsHost>
-        <WindowsFormsHost Grid.Column="0" Grid.Row="1" Name="Host2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10">
-            <zed:ZedGraphControl Name="zedGraph2"/>
-        </WindowsFormsHost>
-        <TabControl Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10">
-            <TabItem Header="TabItem">
+        <TabControl Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0">
+            <TabItem Header="1">
                 <Grid Background="#FFE5E5E5">
                     <RichTextBox HorizontalAlignment="Left" Height="212" VerticalAlignment="Top" Width="523">
                         <FlowDocument>
@@ -42,7 +42,7 @@
                     </RichTextBox>
                 </Grid>
             </TabItem>
-            <TabItem Header="TabItem">
+            <TabItem Header="2">
                 <Grid Background="#FFE5E5E5">
                     <RichTextBox HorizontalAlignment="Left" Height="212" VerticalAlignment="Top" Width="523">
                         <FlowDocument>
@@ -53,7 +53,7 @@
                     </RichTextBox>
                 </Grid>
             </TabItem>
-            <TabItem Header="TabItem" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="54">
+            <TabItem Header="3"  HorizontalAlignment="Left" Height="20" VerticalAlignment="Top">
                 <Grid Background="#FFE5E5E5">
                     <RichTextBox HorizontalAlignment="Left" Height="212" VerticalAlignment="Top" Width="523">
                         <FlowDocument>
@@ -64,7 +64,7 @@
                     </RichTextBox>
                 </Grid>
             </TabItem>
-            <TabItem Header="TabItem" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="54">
+            <TabItem Header="4" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top">
                 <Grid Background="#FFE5E5E5">
                     <RichTextBox HorizontalAlignment="Left" Height="212" VerticalAlignment="Top" Width="523">
                         <FlowDocument>
@@ -75,7 +75,7 @@
                     </RichTextBox>
                 </Grid>
             </TabItem>
-            <TabItem Header="TabItem" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="54">
+            <TabItem Header="5" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top">
                 <Grid Background="#FFE5E5E5">
                     <RichTextBox HorizontalAlignment="Left" Height="212" VerticalAlignment="Top" Width="523">
                         <FlowDocument>
@@ -87,5 +87,44 @@
                 </Grid>
             </TabItem>
         </TabControl>
+        <TabControl Grid.Row="1" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5">
+            <TabItem Header="TabItem">
+                <Grid Background="#FFE5E5E5">
+                    <WindowsFormsHost>
+                        <zed:ZedGraphControl Name="zedGraph20"/>
+                    </WindowsFormsHost>
+                </Grid>
+            </TabItem>
+            <TabItem Header="TabItem">
+                <Grid Background="#FFE5E5E5">
+                    <WindowsFormsHost>
+                        <zed:ZedGraphControl Name="zedGraph21"/>
+                    </WindowsFormsHost>
+                </Grid>
+            </TabItem>
+            <TabItem Header="TabItem" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="54">
+                <Grid Background="#FFE5E5E5">
+                    <WindowsFormsHost>
+                        <zed:ZedGraphControl Name="zedGraph22"/>
+                    </WindowsFormsHost>
+                </Grid>
+            </TabItem>
+            <TabItem Header="TabItem" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="54">
+                <Grid Background="#FFE5E5E5">
+                    <WindowsFormsHost>
+                        <zed:ZedGraphControl Name="zedGraph23"/>
+                    </WindowsFormsHost>
+                </Grid>
+            </TabItem>
+            <TabItem Header="TabItem" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="54">
+                <Grid Background="#FFE5E5E5">
+                    <WindowsFormsHost>
+                        <zed:ZedGraphControl Name="zedGraph24"/>
+                    </WindowsFormsHost>
+                </Grid>
+            </TabItem>
+        </TabControl>
+        <Button x:Name="exitButton" Content="Выход" Grid.Column="1" Grid.Row="2" Height="20"  HorizontalAlignment="Right"  VerticalAlignment="Center" Margin="0,0,10,0" Width="58"/>
+        <Border BorderBrush="Black" BorderThickness="1" Grid.Column="1" HorizontalAlignment="Left" Height="100" Margin="201,18,-48,-91" Grid.Row="2" VerticalAlignment="Top" Width="100"/>
     </Grid>
 </Window>
