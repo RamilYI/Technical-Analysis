@@ -21,31 +21,23 @@ namespace Technical_Analysis
 
         public TechAnalysisVM()
         {
-            //OxyStorage = OxyArray;
             datagridStorage = arrayForDataGrid;
             ButtonCommand = new RelayCommand(o => MainButtonClick());
         }
 
         public ICommand ButtonCommand { get; set; }
-        //public List<DataPoint> OxyStorage { get; set; }
         public object datagridStorage { get; set; }
-
-        //public object OxyStorage2 { get; set; }
+        
 
         private static string buf;
         private List<Tuple<DateTime, double, double, double, double, double>> arrayForDataGrid =
             new List<Tuple<DateTime, double, double, double, double, double>>();
-
-        //private List<DataPoint> OxyArray = new List<DataPoint>();
-        //private List<BoxPlotItem> OxyArray2 = new List<BoxPlotItem>();
-        //private List<BoxPlotItem> OxyArray3 = new List<BoxPlotItem>();
+        
         private void MainButtonClick()
         {
             arrayForDataGrid.Clear();
             OpenCsv();
-            //OnPropertyChanged("OxyStorage");
             OnPropertyChanged("datagridArr");
-            //OnPropertyChanged("OxyStorage2");
         }
 
         internal void OpenCsv()
@@ -87,8 +79,6 @@ namespace Technical_Analysis
                     bufArray[2],
                     bufArray[3],
                     bufArray[4]));
-                //OxyArray.Add(new DataPoint(bufArray[0],
-                //    bufArray[5]));
             }
 
         }

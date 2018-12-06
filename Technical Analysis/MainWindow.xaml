@@ -22,15 +22,15 @@
         </Grid.ColumnDefinitions>
         <Button Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Content="Загрузить" Height="20"  HorizontalAlignment="Left"  VerticalAlignment="Center" Margin="10,0,0,5"  Command="{Binding ButtonCommand}" />
         <Button Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Content="Обновить"  Height="20" HorizontalAlignment="Left"  VerticalAlignment="Center" Margin="90,0,0,5" Click="ButtonBase_OnClick" />
-        <DataGrid Grid.Column="1" Grid.Row="0" Name="DataGrid"  ItemsSource="{Binding datagridStorage, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Stretch" HorizontalAlignment="Left" Margin="5,5,0,5" Width="248">
+        <DataGrid Grid.Column="1" Grid.Row="0" Name="DataGrid"  ItemsSource="{Binding datagridStorage, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Stretch" HorizontalAlignment="Left" Margin="5,5,-18,5" Width="266">
         </DataGrid>
         <WindowsFormsHost Grid.Column="0" Grid.Row="0" Name="Host" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5">
             <zed:ZedGraphControl Name="zedGraph"/>
         </WindowsFormsHost>
         <TabControl Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0">
-            <TabItem Header="1">
+            <TabItem Header="SMA">
                 <Grid Background="#FFE5E5E5">
-                    <RichTextBox HorizontalAlignment="Left" Height="235" VerticalAlignment="Top" Width="247">
+                    <RichTextBox HorizontalAlignment="Left" Height="245" VerticalAlignment="Top" Width="247">
                         <FlowDocument>
                             <Paragraph>
                                 <Run Text="RichTextBox"/>
@@ -39,9 +39,9 @@
                     </RichTextBox>
                 </Grid>
             </TabItem>
-            <TabItem Header="2">
+            <TabItem Header="EMA">
                 <Grid Background="#FFE5E5E5">
-                    <RichTextBox HorizontalAlignment="Left" Height="212" VerticalAlignment="Top" Width="523">
+                    <RichTextBox HorizontalAlignment="Left"  Height="245" VerticalAlignment="Top" Width="258" Margin="0,0,-11,0">
                         <FlowDocument>
                             <Paragraph>
                                 <Run Text="RichTextBox"/>
@@ -50,9 +50,9 @@
                     </RichTextBox>
                 </Grid>
             </TabItem>
-            <TabItem Header="3"  HorizontalAlignment="Left" Height="20" VerticalAlignment="Top">
+            <TabItem Header="MACD"  HorizontalAlignment="Left" Height="20" VerticalAlignment="Top">
                 <Grid Background="#FFE5E5E5">
-                    <RichTextBox HorizontalAlignment="Left" Height="212" VerticalAlignment="Top" Width="523">
+                    <RichTextBox HorizontalAlignment="Left" Height="245" VerticalAlignment="Top" Width="268" Margin="0,0,-21,0">
                         <FlowDocument>
                             <Paragraph>
                                 <Run Text="RichTextBox"/>
@@ -61,9 +61,9 @@
                     </RichTextBox>
                 </Grid>
             </TabItem>
-            <TabItem Header="4" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top">
+            <TabItem Header="OBV" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top">
                 <Grid Background="#FFE5E5E5">
-                    <RichTextBox HorizontalAlignment="Left" Height="212" VerticalAlignment="Top" Width="523">
+                    <RichTextBox HorizontalAlignment="Left" Height="245" VerticalAlignment="Top" Width="271" Margin="0,0,-24,0">
                         <FlowDocument>
                             <Paragraph>
                                 <Run Text="RichTextBox"/>
@@ -72,9 +72,9 @@
                     </RichTextBox>
                 </Grid>
             </TabItem>
-            <TabItem Header="5" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top">
+            <TabItem Header="RSI" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top">
                 <Grid Background="#FFE5E5E5">
-                    <RichTextBox HorizontalAlignment="Left" Height="212" VerticalAlignment="Top" Width="523">
+                    <RichTextBox HorizontalAlignment="Left" Height="245" VerticalAlignment="Top" Width="268" Margin="0,0,-21,0">
                         <FlowDocument>
                             <Paragraph>
                                 <Run Text="RichTextBox"/>
@@ -85,37 +85,37 @@
             </TabItem>
         </TabControl>
         <TabControl Grid.Row="1" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5">
-            <TabItem Header="TabItem">
+            <TabItem Header="SMA">
                 <Grid Background="#FFE5E5E5">
-                    <WindowsFormsHost>
+                    <WindowsFormsHost Name="Host2">
                         <zed:ZedGraphControl Name="zedGraph20"/>
                     </WindowsFormsHost>
                 </Grid>
             </TabItem>
-            <TabItem Header="TabItem">
+            <TabItem Header="EMA">
                 <Grid Background="#FFE5E5E5">
-                    <WindowsFormsHost>
+                    <WindowsFormsHost Name="Host3">
                         <zed:ZedGraphControl Name="zedGraph21"/>
                     </WindowsFormsHost>
                 </Grid>
             </TabItem>
-            <TabItem Header="TabItem" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="54">
+            <TabItem Header="MACD" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="54">
                 <Grid Background="#FFE5E5E5">
-                    <WindowsFormsHost>
+                    <WindowsFormsHost Name="Host4">
                         <zed:ZedGraphControl Name="zedGraph22"/>
                     </WindowsFormsHost>
                 </Grid>
             </TabItem>
-            <TabItem Header="TabItem" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="54">
+            <TabItem Header="OBV" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="54">
                 <Grid Background="#FFE5E5E5">
-                    <WindowsFormsHost>
+                    <WindowsFormsHost Name="Host5">
                         <zed:ZedGraphControl Name="zedGraph23"/>
                     </WindowsFormsHost>
                 </Grid>
             </TabItem>
-            <TabItem Header="TabItem" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="54">
+            <TabItem Header="RSI" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="54">
                 <Grid Background="#FFE5E5E5">
-                    <WindowsFormsHost>
+                    <WindowsFormsHost Name="Host6">
                         <zed:ZedGraphControl Name="zedGraph24"/>
                     </WindowsFormsHost>
                 </Grid>

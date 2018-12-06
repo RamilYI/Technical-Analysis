@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace Technical_Analysis
 {
@@ -31,20 +32,21 @@ namespace Technical_Analysis
             return result;
         }
 
-        static double[] SMA(double[] close)
+        internal static double[] SMA(double[] close)
         {
             int closeLength = close.Length;
             return movingAverageCalculate(close, closeLength);
         }
 
-        static double[] EMA(double[] close, int intervalValue)
+        internal static double[] EMA(double[] close, int intervalValue)
         {
             int closeLength = close.Length;
-            double alpha = 2 / (closeLength + 1);
+            double alpha = 2 / ((double)intervalValue + 1);
             double[] result = new double[closeLength];
             for (int i = 0; i < closeLength; i++)
             {
-                if (i <= intervalValue) result = movingAverageCalculate(close, closeLength);
+                if (i < intervalValue) result[i] = close[i];
+                else if (i == intervalValue) result[i] = result.Take(intervalValue).Sum()/intervalValue;
                 else
                 {
                     result[i] = alpha * close[i - intervalValue]
@@ -56,7 +58,7 @@ namespace Technical_Analysis
         }
 
 
-        static double[] OBV(double[] close, double[] volume)
+        internal static double[] OBV(double[] close, double[] volume)
         {
             int closeLength = close.Length;
             double[] result = new double[closeLength];
@@ -65,39 +67,61 @@ namespace Technical_Analysis
             for (int i = 1; i < closeLength; i++)
             {
                 if (close[i] > close[i - 1]) result[i] = result[i-1] + volume[i];
-                else if (close[i] == close[i - 1]) result[i] = result[i - 1] + 0;
+                else if (close[i].Equals(close[i - 1])) result[i] = result[i - 1] + 0;
                 else result[i] = result[i - 1] - volume[i];
             }
 
             return result;
         }
 
-        static double[] MACD(double[] close)
+        internal static double[] MACD(double[] close)
         {
-            return EMA(close, 12).Except(EMA(close, 26)).ToArray();
+            double[] result = new double[close.Length];
+            double[] ema12 = EMA(close, 12);
+            double[] ema26 = EMA(close, 26);
+            for (int i = 0; i < close.Length; i++)
+            {
+                result[i] = ema12[i] - ema26[i];
+            }
+            return result;
         }
 
-        static double[] RSI(double[] close)
+        internal static double[] RSI(double[] close)
         {
             int closeLength = close.Length;
             double[] U = new double[closeLength];
             double[] D = new double[closeLength];
             double[] result = new double[closeLength];
-
-            U[0] = D[0] = close[0];
+            double[] RS = new double[closeLength];
+            const int N = 8;
+            U[0] = close[0];
+            D[0] = close[0];
             for (int i = 1; i < closeLength; i++)
             {
+                U[i] += U[i - 1];
+                D[i] += D[i - 1];
                 if (close[i] > close[i - 1]) U[i] += close[i];
                 else D[i] += close[i];
             }
 
-            for (int i = 0; i < closeLength; i++)
+            for (int i = N; i < closeLength; ++i)
             {
-                result[i] = 100 - (100 / (1 + U[i] / D[i]));
+                result[i] = 100 - (100 / (1 + (U[i] - U[i - N]) / (D[i] - D[i - N])));
             }
 
             return result;
         }
+
+        //internal static double NRMSE(double[] f, double[] g)
+        //{
+        //    double sqrDiff = 0;
+        //    for (int i = 0; i < f.Length; i++)
+        //    {
+        //        sqrDiff += Math.Pow((f[i] - g[i]), 2);
+        //    }
+
+        //    return Math.Pow(sqrDiff, 2)/(f.Max() - f.Min());
+        //}
 
     }
 }
