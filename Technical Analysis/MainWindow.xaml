@@ -30,8 +30,8 @@
         <TabControl Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0">
             <TabItem Header="SMA">
                 <Grid Background="#FFE5E5E5">
-                    <RichTextBox HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                        <FlowDocument>
+                    <RichTextBox HorizontalAlignment="Stretch" VerticalAlignment="Stretch" IsReadOnly="True">
+                        <FlowDocument >
                             <Paragraph>
                                 <Run Text=""/>
                             </Paragraph>
@@ -41,7 +41,7 @@
             </TabItem>
             <TabItem Header="EMA">
                 <Grid Background="#FFE5E5E5">
-                    <RichTextBox HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <RichTextBox HorizontalAlignment="Stretch" VerticalAlignment="Stretch" IsReadOnly="True">
                         <FlowDocument>
                             <Paragraph>
                                 <Run Text="RichTextBox"/>
@@ -52,7 +52,7 @@
             </TabItem>
             <TabItem Header="MACD"  HorizontalAlignment="Left" Height="20" VerticalAlignment="Top">
                 <Grid Background="#FFE5E5E5">
-                    <RichTextBox HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <RichTextBox HorizontalAlignment="Stretch" VerticalAlignment="Stretch" IsReadOnly="True">
                         <FlowDocument>
                             <Paragraph>
                                 <Run Text="RichTextBox"/>
@@ -63,7 +63,7 @@
             </TabItem>
             <TabItem Header="OBV" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top">
                 <Grid Background="#FFE5E5E5">
-                    <RichTextBox HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <RichTextBox HorizontalAlignment="Stretch" VerticalAlignment="Stretch" IsReadOnly="True">
                         <FlowDocument>
                             <Paragraph>
                                 <Run Text="RichTextBox"/>
@@ -74,7 +74,7 @@
             </TabItem>
             <TabItem Header="RSI" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top">
                 <Grid Background="#FFE5E5E5">
-                    <RichTextBox HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <RichTextBox HorizontalAlignment="Stretch" VerticalAlignment="Stretch" IsReadOnly="True">
                         <FlowDocument>
                             <Paragraph>
                                 <Run Text="RichTextBox"/>
