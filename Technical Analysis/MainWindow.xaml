@@ -22,7 +22,7 @@
         </Grid.ColumnDefinitions>
         <Button Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Content="Загрузить" Height="20"  HorizontalAlignment="Left"  VerticalAlignment="Center" Margin="10,0,0,5"  Command="{Binding ButtonCommand}" />
         <Button Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Content="Обновить"  Height="20" HorizontalAlignment="Left"  VerticalAlignment="Center" Margin="90,0,0,5" Click="ButtonBase_OnClick" />
-        <DataGrid Grid.Column="1" Grid.Row="0" Name="DataGrid"  ItemsSource="{Binding datagridStorage, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Stretch" HorizontalAlignment="Left" Margin="5,5,-18,5" Width="266">
+        <DataGrid Grid.Column="1" Grid.Row="0" Name="DataGrid"  ItemsSource="{Binding datagridStorage, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Stretch" HorizontalAlignment="Left" Margin="5,5,-18,5" Width="245">
         </DataGrid>
         <WindowsFormsHost Grid.Column="0" Grid.Row="0" Name="Host" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5">
             <zed:ZedGraphControl Name="zedGraph"/>
@@ -30,10 +30,10 @@
         <TabControl Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0">
             <TabItem Header="SMA">
                 <Grid Background="#FFE5E5E5">
-                    <RichTextBox HorizontalAlignment="Left" Height="245" VerticalAlignment="Top" Width="247">
+                    <RichTextBox HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                         <FlowDocument>
                             <Paragraph>
-                                <Run Text="RichTextBox"/>
+                                <Run Text=""/>
                             </Paragraph>
                         </FlowDocument>
                     </RichTextBox>
@@ -41,7 +41,7 @@
             </TabItem>
             <TabItem Header="EMA">
                 <Grid Background="#FFE5E5E5">
-                    <RichTextBox HorizontalAlignment="Left"  Height="245" VerticalAlignment="Top" Width="258" Margin="0,0,-11,0">
+                    <RichTextBox HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                         <FlowDocument>
                             <Paragraph>
                                 <Run Text="RichTextBox"/>
@@ -52,7 +52,7 @@
             </TabItem>
             <TabItem Header="MACD"  HorizontalAlignment="Left" Height="20" VerticalAlignment="Top">
                 <Grid Background="#FFE5E5E5">
-                    <RichTextBox HorizontalAlignment="Left" Height="245" VerticalAlignment="Top" Width="268" Margin="0,0,-21,0">
+                    <RichTextBox HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                         <FlowDocument>
                             <Paragraph>
                                 <Run Text="RichTextBox"/>
@@ -63,7 +63,7 @@
             </TabItem>
             <TabItem Header="OBV" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top">
                 <Grid Background="#FFE5E5E5">
-                    <RichTextBox HorizontalAlignment="Left" Height="245" VerticalAlignment="Top" Width="271" Margin="0,0,-24,0">
+                    <RichTextBox HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                         <FlowDocument>
                             <Paragraph>
                                 <Run Text="RichTextBox"/>
@@ -74,7 +74,7 @@
             </TabItem>
             <TabItem Header="RSI" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top">
                 <Grid Background="#FFE5E5E5">
-                    <RichTextBox HorizontalAlignment="Left" Height="245" VerticalAlignment="Top" Width="268" Margin="0,0,-21,0">
+                    <RichTextBox HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                         <FlowDocument>
                             <Paragraph>
                                 <Run Text="RichTextBox"/>
