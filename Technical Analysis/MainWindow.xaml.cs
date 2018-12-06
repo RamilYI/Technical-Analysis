@@ -82,7 +82,7 @@ namespace Technical_Analysis
             }
 
             sma = Indicators.SMA(close);
-            ema = Indicators.EMA(close, 5);
+            ema = Indicators.EMA(close, 10);
             macd = Indicators.MACD(close);
             obv = Indicators.OBV(close, volume);
             rsi = Indicators.RSI(close);
@@ -120,22 +120,17 @@ namespace Technical_Analysis
             zedGraphSMA.AxisChange();
             zedGraphSMA.Invalidate();
             zedGraphSMA.Refresh();
-            /*int i = myPane.AddYAxis("");
-            myPane.YAxisList[i].Color = Color.Orange;
-            myPane.YAxisList[i].Scale.IsVisible = false;
-            myPane.YAxisList[i].MajorTic.IsAllTics = false;
-            myPane.YAxisList[i].MinorTic.IsAllTics = false;
-            myPane.YAxisList[i].Cross = pointOnXAxisThatIWantToMark;*/
         }
 
         private void drawMACD()
         {
             StockPointList list = new StockPointList();
             StockPointList list2 = new StockPointList();
+            double[] expMACD = Indicators.EMA(macd, 10);
             for (int i = 0; i < arrayForDataGrid.Count; i++)
             {
                 list.Add((XDate) arrayForDataGrid[i].Item1, macd[i]);
-                list2.Add((XDate) arrayForDataGrid[i].Item1, arrayForDataGrid[i].Item3);
+                list2.Add((XDate) arrayForDataGrid[i].Item1, expMACD[i]);
             }
 
             ZedGraphControl zedGraphMACD = (ZedGraphControl) Host4.Child;
@@ -145,6 +140,8 @@ namespace Technical_Analysis
             LineItem stickItem = pane2.AddCurve("", list, Color.Crimson, SymbolType.None);
             paneSettings(pane2);
             stickItem.Color = Color.Crimson;
+            LineItem stickItem2 = pane2.AddCurve("", list2, Color.Green, SymbolType.None); //экспоненц средняя MACD
+            stickItem2.Color = Color.Green;
             zedGraphMACD.AxisChange();
             zedGraphMACD.Invalidate();
         }
@@ -184,9 +181,21 @@ namespace Technical_Analysis
             GraphPane pane2 = zedGraphRSI.GraphPane;
             LineItem stickItem = pane2.AddCurve("", list, Color.Crimson, SymbolType.None);
             paneSettings(pane2);
+            double minOBV = 30;
+            LineObj line1 = new LineObj (0, minOBV, list.Count, minOBV);
+            double maxOBV = 70;
+            LineObj line2 = new LineObj(0, maxOBV, list.Count, maxOBV);
+            pane2.GraphObjList.Add(line1);
+            pane2.GraphObjList.Add(line2);
             stickItem.Color = Color.Crimson;
             zedGraphRSI.AxisChange();
             zedGraphRSI.Invalidate();
+            /*int i = myPane.AddYAxis("");
+    myPane.YAxisList[i].Color = Color.Orange;
+myPane.YAxisList[i].Scale.IsVisible = false;
+myPane.YAxisList[i].MajorTic.IsAllTics = false;
+myPane.YAxisList[i].MinorTic.IsAllTics = false;
+myPane.YAxisList[i].Cross = pointOnXAxisThatIWantToMark;*/
         }
 
         private static void paneSettings(GraphPane pane)
