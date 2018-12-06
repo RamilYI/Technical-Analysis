@@ -15,12 +15,12 @@ namespace Technical_Analysis
                 if (i < INTERVAL_COUNT) result[i] = close[i];
                 else
                 {
-                    for (int j = i - INTERVAL_COUNT; j <= i; j++)
+                    for (int j = i - closeLength; j <= i; j++)
                     {
                         result[i] += close[j];
                     }
 
-                    result[i] /= INTERVAL_COUNT;
+                    result[i] /= closeLength;
                 }
             }
 
