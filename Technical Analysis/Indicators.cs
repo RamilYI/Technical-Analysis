@@ -4,7 +4,6 @@ namespace Technical_Analysis
 {
     public static class Indicators
     {
-        const int INTERVAL_COUNT = 5;
         //вспомогательный метод
         private static double[] movingAverageCalculate(double[] close, int closeLength)
         {
@@ -12,15 +11,15 @@ namespace Technical_Analysis
 
             for (int i = 0; i < closeLength; i++)
             {
-                if (i < INTERVAL_COUNT) result[i] = close[i];
+                if (i < closeLength) result[i] = close[i];
                 else
                 {
-                    for (int j = i - INTERVAL_COUNT; j <= i; j++)
+                    for (int j = i - closeLength; j <= i; j++)
                     {
                         result[i] += close[j];
                     }
 
-                    result[i] /= INTERVAL_COUNT;
+                    result[i] /= closeLength;
                 }
             }
 
