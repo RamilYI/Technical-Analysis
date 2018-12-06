@@ -29,7 +29,7 @@ namespace Technical_Analysis
         internal static double[] SMA(double[] close)
         {
             int closeLength = close.Length;
-            return movingAverageCalculate(close, 6);
+            return movingAverageCalculate(close, 12);
         }
 
         internal static double[] EMA(double[] close, int intervalValue)
