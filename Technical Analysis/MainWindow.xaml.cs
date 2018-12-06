@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Windows;
 using System.Windows.Data;
-using System.Windows.Forms.DataVisualization.Charting;
 using ZedGraph;
 using AxisType = ZedGraph.AxisType;
 
