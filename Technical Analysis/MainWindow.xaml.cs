@@ -87,7 +87,6 @@ namespace Technical_Analysis
             macd = Indicators.MACD(close);
             obv = Indicators.OBV(close, volume);
             rsi = Indicators.RSI(close);
-            //double test = Indicators.NRMSE(ema, sma);
         }
 
         private void drawIndicators()
@@ -127,7 +126,9 @@ namespace Technical_Analysis
         {
             StockPointList list = new StockPointList();
             StockPointList list2 = new StockPointList();
+            StockPointList points = new StockPointList();
             double[] expMACD = Indicators.EMA(macd, 10);
+            List<double> lines = new List<double>();
             for (int i = 0; i < arrayForDataGrid.Count; i++)
             {
                 list.Add((XDate) arrayForDataGrid[i].Item1, macd[i]);
@@ -197,12 +198,6 @@ namespace Technical_Analysis
             stickItem.Color = Color.Crimson;
             zedGraphRSI.AxisChange();
             zedGraphRSI.Invalidate();
-            /*int i = myPane.AddYAxis("");
-    myPane.YAxisList[i].Color = Color.Orange;
-myPane.YAxisList[i].Scale.IsVisible = false;
-myPane.YAxisList[i].MajorTic.IsAllTics = false;
-myPane.YAxisList[i].MinorTic.IsAllTics = false;
-myPane.YAxisList[i].Cross = pointOnXAxisThatIWantToMark;*/
         }
 
         private static void paneSettings(GraphPane pane)

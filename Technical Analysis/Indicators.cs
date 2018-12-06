@@ -105,17 +105,5 @@ namespace Technical_Analysis
 
             return result;
         }
-
-        //internal static double NRMSE(double[] f, double[] g)
-        //{
-        //    double sqrDiff = 0;
-        //    for (int i = 0; i < f.Length; i++)
-        //    {
-        //        sqrDiff += Math.Pow((f[i] - g[i]), 2);
-        //    }
-
-        //    return Math.Pow(sqrDiff, 2)/(f.Max() - f.Min());
-        //}
-
     }
 }
