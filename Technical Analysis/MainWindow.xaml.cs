@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows;
 using System.Windows.Data;
+using System.Windows.Forms.Integration;
 using ZedGraph;
 using AxisType = ZedGraph.AxisType;
 
@@ -18,6 +19,7 @@ namespace Technical_Analysis
         double[] close, volume;
         StockPointList stockPointList = new StockPointList();
         private JapaneseCandleStickItem myCurve;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -33,7 +35,7 @@ namespace Technical_Analysis
             DataGrid.Columns[4].Header = "CLOSE";
             DataGrid.Columns[5].Header = "VOL";
             CollectionViewSource.GetDefaultView(DataGrid.ItemsSource).Refresh();
-            arrayForDataGrid = (List<Tuple<DateTime, double, double, double, double, double>>)DataGrid.ItemsSource;
+            arrayForDataGrid = (List<Tuple<DateTime, double, double, double, double, double>>) DataGrid.ItemsSource;
             zedFill();
             declarationVar();
             drawIndicators();
@@ -45,29 +47,16 @@ namespace Technical_Analysis
             for (var i = 0; i < arrayForDataGrid.Count; i++)
             {
                 var t = arrayForDataGrid[i];
-                stockPointList.Add((XDate)t.Item1,
-                    t.Item3,
-                    t.Item4,
-                    t.Item2,
-                    t.Item5,
-                    t.Item6);
+                stockPointList.Add((XDate)t.Item1, t.Item3, t.Item4, t.Item2, t.Item5, t.Item6);
             }
 
             ZedGraphControl zedGraph = (ZedGraphControl)Host.Child;
             GraphPane pane = zedGraph.GraphPane;
-            zedGraph.IsShowHScrollBar = true;
-            zedGraph.IsShowVScrollBar = true;
-            zedGraph.IsScrollY2 = true;
-            zedGraph.IsAutoScrollRange = true;
+            drawSettings(zedGraph);
             myCurve = pane.AddJapaneseCandleStick("", stockPointList);
             myCurve.Stick.IsAutoSize = true;
             myCurve.Stick.Color = Color.Green;
-            pane.Chart.Fill = new Fill(Color.White, Color.Azure, 45.0f);
-            pane.Fill = new Fill(Color.White, Color.FromArgb(220, 220, 255), 45.0f);
-            pane.XAxis.Type = AxisType.DateAsOrdinal;
-            pane.XAxis.Scale.Min = new XDate(01,12,2017);
-            pane.XAxis.Title.Text = "Дата";
-            pane.YAxis.Title.Text = "Цена";
+            paneSettings(pane);
             string CsvFileName;
             TechAnalysisVM setCsvFile = new TechAnalysisVM();
             setCsvFile.getCsvFile(out CsvFileName);
@@ -102,32 +91,41 @@ namespace Technical_Analysis
 
         private void drawIndicators()
         {
-            drawMA(sma);
-            drawMA(ema);
+            drawMA(sma, Host2);
+            drawMA(ema, Host3);
             drawMACD();
             drawOBV();
             drawRSI();
         }
 
-        private void drawMA(double[] ma)
+        private void drawMA(double[] ma, WindowsFormsHost HostMA)
         {
             StockPointList list = new StockPointList();
             StockPointList list2 = new StockPointList();
             for (int i = 0; i < arrayForDataGrid.Count; i++)
             {
-                list.Add((XDate)arrayForDataGrid[i].Item1, ma[i]);
-                list2.Add((XDate)arrayForDataGrid[i].Item1, arrayForDataGrid[i].Item3);
+                list.Add((XDate) arrayForDataGrid[i].Item1, ma[i]);
+                list2.Add((XDate) arrayForDataGrid[i].Item1, arrayForDataGrid[i].Item3);
             }
 
-            ZedGraphControl zedGraphSMA = (ZedGraphControl)Host2.Child;
+            ZedGraphControl zedGraphSMA = (ZedGraphControl) HostMA.Child;
+            zedGraphSMA.GraphPane = new GraphPane();
             drawSettings(zedGraphSMA);
             GraphPane pane2 = zedGraphSMA.GraphPane;
             LineItem stickItem = pane2.AddCurve("", list, Color.Crimson, SymbolType.None);
             LineItem stickitem2 = pane2.AddCurve("", list2, Color.ForestGreen, SymbolType.None);
             stickItem.Color = Color.Crimson;
             stickitem2.Color = Color.ForestGreen;
+            paneSettings(pane2);
             zedGraphSMA.AxisChange();
             zedGraphSMA.Invalidate();
+            zedGraphSMA.Refresh();
+            /*int i = myPane.AddYAxis("");
+            myPane.YAxisList[i].Color = Color.Orange;
+            myPane.YAxisList[i].Scale.IsVisible = false;
+            myPane.YAxisList[i].MajorTic.IsAllTics = false;
+            myPane.YAxisList[i].MinorTic.IsAllTics = false;
+            myPane.YAxisList[i].Cross = pointOnXAxisThatIWantToMark;*/
         }
 
         private void drawMACD()
@@ -136,13 +134,16 @@ namespace Technical_Analysis
             StockPointList list2 = new StockPointList();
             for (int i = 0; i < arrayForDataGrid.Count; i++)
             {
-                list.Add((XDate)arrayForDataGrid[i].Item1, macd[i]);
-                list2.Add((XDate)arrayForDataGrid[i].Item1, arrayForDataGrid[i].Item3);
+                list.Add((XDate) arrayForDataGrid[i].Item1, macd[i]);
+                list2.Add((XDate) arrayForDataGrid[i].Item1, arrayForDataGrid[i].Item3);
             }
-            ZedGraphControl zedGraphMACD = (ZedGraphControl)Host4.Child;
+
+            ZedGraphControl zedGraphMACD = (ZedGraphControl) Host4.Child;
+            zedGraphMACD.GraphPane = new GraphPane();
             drawSettings(zedGraphMACD);
             GraphPane pane2 = zedGraphMACD.GraphPane;
             LineItem stickItem = pane2.AddCurve("", list, Color.Crimson, SymbolType.None);
+            paneSettings(pane2);
             stickItem.Color = Color.Crimson;
             zedGraphMACD.AxisChange();
             zedGraphMACD.Invalidate();
@@ -153,12 +154,15 @@ namespace Technical_Analysis
             StockPointList list = new StockPointList();
             for (int i = 0; i < arrayForDataGrid.Count; i++)
             {
-                list.Add((XDate)arrayForDataGrid[i].Item1, obv[i]);
+                list.Add((XDate) arrayForDataGrid[i].Item1, obv[i]);
             }
-            ZedGraphControl zedGraphOBV = (ZedGraphControl)Host5.Child;
+
+            ZedGraphControl zedGraphOBV = (ZedGraphControl) Host5.Child;
+            zedGraphOBV.GraphPane = new GraphPane();
             drawSettings(zedGraphOBV);
             GraphPane pane2 = zedGraphOBV.GraphPane;
             StickItem stickItem = pane2.AddStick("", list, Color.Crimson);
+            paneSettings(pane2);
             stickItem.Color = Color.Crimson;
             zedGraphOBV.AxisChange();
             zedGraphOBV.Invalidate();
@@ -170,17 +174,28 @@ namespace Technical_Analysis
             StockPointList list2 = new StockPointList();
             for (int i = 0; i < arrayForDataGrid.Count; i++)
             {
-                list.Add((XDate)arrayForDataGrid[i].Item1, rsi[i]);
-                list2.Add((XDate)arrayForDataGrid[i].Item1, arrayForDataGrid[i].Item3);
+                list.Add((XDate) arrayForDataGrid[i].Item1, rsi[i]);
+                list2.Add((XDate) arrayForDataGrid[i].Item1, arrayForDataGrid[i].Item3);
             }
 
-            ZedGraphControl zedGraphRSI = (ZedGraphControl)Host6.Child;
+            ZedGraphControl zedGraphRSI = (ZedGraphControl) Host6.Child;
+            zedGraphRSI.GraphPane = new GraphPane();
             drawSettings(zedGraphRSI);
             GraphPane pane2 = zedGraphRSI.GraphPane;
             LineItem stickItem = pane2.AddCurve("", list, Color.Crimson, SymbolType.None);
+            paneSettings(pane2);
             stickItem.Color = Color.Crimson;
             zedGraphRSI.AxisChange();
             zedGraphRSI.Invalidate();
+        }
+
+        private static void paneSettings(GraphPane pane)
+        {
+            pane.Chart.Fill = new Fill(Color.White, Color.Azure, 45.0f);
+            pane.Fill = new Fill(Color.White, Color.FromArgb(220, 220, 255), 45.0f);
+            pane.XAxis.Type = AxisType.DateAsOrdinal;
+            pane.XAxis.Title.Text = "Дата";
+            pane.YAxis.Title.Text = "Цена";
         }
 
         private static void drawSettings(ZedGraphControl zedGraphEMA)
@@ -197,3 +212,4 @@ namespace Technical_Analysis
         }
     }
 }
+ 
