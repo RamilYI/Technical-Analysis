@@ -112,8 +112,8 @@ namespace Technical_Analysis
             zedGraphSMA.GraphPane = new GraphPane();
             drawSettings(zedGraphSMA);
             GraphPane pane2 = zedGraphSMA.GraphPane;
-            LineItem stickItem = pane2.AddCurve("", list, Color.Crimson, SymbolType.None);
-            LineItem stickitem2 = pane2.AddCurve("", list2, Color.ForestGreen, SymbolType.None);
+            LineItem stickItem = pane2.AddCurve("MA", list, Color.Crimson, SymbolType.None);
+            LineItem stickitem2 = pane2.AddCurve("Исходный график", list2, Color.ForestGreen, SymbolType.None);
             stickItem.Color = Color.Crimson;
             stickitem2.Color = Color.ForestGreen;
             paneSettings(pane2);
@@ -137,10 +137,10 @@ namespace Technical_Analysis
             zedGraphMACD.GraphPane = new GraphPane();
             drawSettings(zedGraphMACD);
             GraphPane pane2 = zedGraphMACD.GraphPane;
-            LineItem stickItem = pane2.AddCurve("", list, Color.Crimson, SymbolType.None);
+            LineItem stickItem = pane2.AddCurve("MACD", list, Color.Crimson, SymbolType.None);
             paneSettings(pane2);
             stickItem.Color = Color.Crimson;
-            LineItem stickItem2 = pane2.AddCurve("", list2, Color.Green, SymbolType.None); //экспоненц средняя MACD
+            LineItem stickItem2 = pane2.AddCurve("экспоненциальная средняя MACD", list2, Color.Green, SymbolType.None); //экспоненц средняя MACD
             stickItem2.Color = Color.Green;
             zedGraphMACD.AxisChange();
             zedGraphMACD.Invalidate();
@@ -149,18 +149,23 @@ namespace Technical_Analysis
         private void drawOBV()
         {
             StockPointList list = new StockPointList();
+            StockPointList list2 = new StockPointList();
+            double[] expOBV = Indicators.EMA(obv, 10);
             for (int i = 0; i < arrayForDataGrid.Count; i++)
             {
                 list.Add((XDate) arrayForDataGrid[i].Item1, obv[i]);
+                list2.Add((XDate)arrayForDataGrid[i].Item1, expOBV[i]);
             }
 
             ZedGraphControl zedGraphOBV = (ZedGraphControl) Host5.Child;
             zedGraphOBV.GraphPane = new GraphPane();
             drawSettings(zedGraphOBV);
             GraphPane pane2 = zedGraphOBV.GraphPane;
-            StickItem stickItem = pane2.AddStick("", list, Color.Crimson);
+            StickItem stickItem = pane2.AddStick("OBV", list, Color.Crimson);
             paneSettings(pane2);
             stickItem.Color = Color.Crimson;
+            LineItem stickItem2 = pane2.AddCurve("экспоненциальная средняя OBV", list2, Color.Green, SymbolType.None); //экспоненц средняя OBV
+            stickItem2.Color = Color.Green;
             zedGraphOBV.AxisChange();
             zedGraphOBV.Invalidate();
         }
@@ -179,10 +184,11 @@ namespace Technical_Analysis
             zedGraphRSI.GraphPane = new GraphPane();
             drawSettings(zedGraphRSI);
             GraphPane pane2 = zedGraphRSI.GraphPane;
-            LineItem stickItem = pane2.AddCurve("", list, Color.Crimson, SymbolType.None);
+            LineItem stickItem = pane2.AddCurve("RSI", list, Color.Crimson, SymbolType.None);
             paneSettings(pane2);
             double minOBV = 30;
             LineObj line1 = new LineObj (0, minOBV, list.Count, minOBV);
+            
             double maxOBV = 70;
             LineObj line2 = new LineObj(0, maxOBV, list.Count, maxOBV);
             pane2.GraphObjList.Add(line1);
