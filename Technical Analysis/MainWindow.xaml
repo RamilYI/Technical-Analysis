@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Technical_Analysis"
         xmlns:zed="clr-namespace:ZedGraph;assembly=ZedGraph"
         mc:Ignorable="d"
-        Title="MainWindow" Height="603.425" Width="1200">
+        Title="Лабораторная работа по ТПР №6" Height="603.425" Width="1200">
     <Window.DataContext>
         <local:TechAnalysisVM/>
     </Window.DataContext>
