@@ -88,7 +88,7 @@ namespace Technical_Analysis
             double[] D = new double[closeLength];
             double[] result = new double[closeLength];
             double[] RS = new double[closeLength];
-            const int N = 8;
+            const int N = 15;
             U[0] = close[0];
             D[0] = close[0];
             for (int i = 1; i < closeLength; i++)
