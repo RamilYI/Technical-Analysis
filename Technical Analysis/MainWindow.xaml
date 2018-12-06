@@ -22,7 +22,7 @@
         </Grid.ColumnDefinitions>
         <Button Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Content="Загрузить" Height="20"  HorizontalAlignment="Left"  VerticalAlignment="Center" Margin="10,0,0,5"  Command="{Binding ButtonCommand}" />
         <Button Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Content="Обновить"  Height="20" HorizontalAlignment="Left"  VerticalAlignment="Center" Margin="90,0,0,5" Click="ButtonBase_OnClick" />
-        <DataGrid Grid.Column="1" Grid.Row="0" Name="DataGrid"  ItemsSource="{Binding datagridStorage, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Stretch" HorizontalAlignment="Left" Margin="5,5,-18,5" Width="245">
+        <DataGrid Grid.Column="1" Grid.Row="0" Name="DataGrid"  ItemsSource="{Binding datagridStorage, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0">
         </DataGrid>
         <WindowsFormsHost Grid.Column="0" Grid.Row="0" Name="Host" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5">
             <zed:ZedGraphControl Name="zedGraph"/>
