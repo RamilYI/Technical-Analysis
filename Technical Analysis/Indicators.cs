@@ -7,9 +7,9 @@ namespace Technical_Analysis
         //вспомогательный метод
         private static double[] movingAverageCalculate(double[] close, int closeLength)
         {
-            double[] result = new double[closeLength];
+            double[] result = new double[close.Length];
 
-            for (int i = 0; i < closeLength; i++)
+            for (int i = 0; i < close.Length; i++)
             {
                 if (i < closeLength) result[i] = close[i];
                 else
@@ -29,7 +29,7 @@ namespace Technical_Analysis
         internal static double[] SMA(double[] close)
         {
             int closeLength = close.Length;
-            return movingAverageCalculate(close, 10);
+            return movingAverageCalculate(close, closeLength);
         }
 
         internal static double[] EMA(double[] close, int intervalValue)
