@@ -14,7 +14,7 @@ namespace Technical_Analysis
     /// </summary>
     public partial class MainWindow : Window
     {
-        private List<Tuple<DateTime, double, double, double, double, double>> arrayForDataGrid;
+        public static List<Tuple<DateTime, double, double, double, double, double>> arrayForDataGrid;
         double[] sma, ema, obv, macd, rsi;
         double[] close, volume;
         StockPointList stockPointList = new StockPointList();
@@ -102,10 +102,12 @@ namespace Technical_Analysis
         {
             StockPointList list = new StockPointList();
             StockPointList list2 = new StockPointList();
+            List<double> lines = new List<double>();
             for (int i = 0; i < arrayForDataGrid.Count; i++)
             {
                 list.Add((XDate) arrayForDataGrid[i].Item1, ma[i]);
                 list2.Add((XDate) arrayForDataGrid[i].Item1, arrayForDataGrid[i].Item3);
+                if (Math.Abs(ma[i] - arrayForDataGrid[i].Item3) < 0.05 && Math.Abs(Math.Abs(macd[i] - arrayForDataGrid[i].Item3)) > 0.0) lines.Add(i+1);
             }
 
             ZedGraphControl zedGraphSMA = (ZedGraphControl) HostMA.Child;
@@ -117,6 +119,7 @@ namespace Technical_Analysis
             stickItem.Color = Color.Crimson;
             stickitem2.Color = Color.ForestGreen;
             paneSettings(pane2);
+            drawCommonPoints(pane2, lines);
             zedGraphSMA.AxisChange();
             zedGraphSMA.Invalidate();
             zedGraphSMA.Refresh();
@@ -126,16 +129,17 @@ namespace Technical_Analysis
         {
             StockPointList list = new StockPointList();
             StockPointList list2 = new StockPointList();
-            StockPointList points = new StockPointList();
             double[] expMACD = Indicators.EMA(macd, 10);
             List<double> lines = new List<double>();
+
             for (int i = 0; i < arrayForDataGrid.Count; i++)
             {
-                list.Add((XDate) arrayForDataGrid[i].Item1, macd[i]);
-                list2.Add((XDate) arrayForDataGrid[i].Item1, expMACD[i]);
+                list.Add((XDate)arrayForDataGrid[i].Item1, macd[i]);
+                list2.Add((XDate)arrayForDataGrid[i].Item1, expMACD[i]);
+                if (Math.Abs(macd[i] - expMACD[i]) < 0.05 && Math.Abs(Math.Abs(macd[i] - expMACD[i])) > 0.0) lines.Add(i+1);
             }
 
-            ZedGraphControl zedGraphMACD = (ZedGraphControl) Host4.Child;
+            ZedGraphControl zedGraphMACD = (ZedGraphControl)Host4.Child;
             zedGraphMACD.GraphPane = new GraphPane();
             drawSettings(zedGraphMACD);
             GraphPane pane2 = zedGraphMACD.GraphPane;
@@ -144,8 +148,25 @@ namespace Technical_Analysis
             stickItem.Color = Color.Crimson;
             LineItem stickItem2 = pane2.AddCurve("экспоненциальная средняя MACD", list2, Color.Green, SymbolType.None); //экспоненц средняя MACD
             stickItem2.Color = Color.Green;
+            drawCommonPoints(pane2, lines);
             zedGraphMACD.AxisChange();
             zedGraphMACD.Invalidate();
+        }
+
+        private static void drawCommonPoints(GraphPane pane2, List<double> n)
+        {
+            for (int i = 0; i < n.Count; i++)
+            {
+                var line = new LineObj(Color.OrangeRed, n[i], 0, n[i], 1);
+
+                line.Location.CoordinateFrame = CoordType.XScaleYChartFraction; 
+                line.IsClippedToChartRect = true;
+
+                //line.Line.Style = System.Drawing.Drawing2D.DashStyle.Dash;
+                line.Line.Width = 1f;
+
+                pane2.GraphObjList.Add(line);
+            }
         }
 
         private void drawOBV()
@@ -205,6 +226,11 @@ namespace Technical_Analysis
             pane.Chart.Fill = new Fill(Color.White, Color.Azure, 45.0f);
             pane.Fill = new Fill(Color.White, Color.FromArgb(220, 220, 255), 45.0f);
             pane.XAxis.Type = AxisType.DateAsOrdinal;
+            pane.Y2Axis.Type = AxisType.DateAsOrdinal;
+            pane.X2Axis.IsVisible = true;
+            pane.X2Axis.Scale.Min = 0;
+            pane.X2Axis.Scale.Max = arrayForDataGrid.Count;
+            pane.X2Axis.MajorGrid.IsVisible = true;
             pane.XAxis.Title.Text = "Дата";
             pane.YAxis.Title.Text = "Цена";
         }
