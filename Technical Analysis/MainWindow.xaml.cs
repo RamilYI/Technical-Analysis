@@ -23,7 +23,6 @@ namespace Technical_Analysis
         public MainWindow()
         {
             InitializeComponent();
-            
         }
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
@@ -48,10 +47,10 @@ namespace Technical_Analysis
             for (var i = 0; i < arrayForDataGrid.Count; i++)
             {
                 var t = arrayForDataGrid[i];
-                stockPointList.Add((XDate)t.Item1, t.Item3, t.Item4, t.Item2, t.Item5, t.Item6);
+                stockPointList.Add((XDate) t.Item1, t.Item3, t.Item4, t.Item2, t.Item5, t.Item6);
             }
 
-            ZedGraphControl zedGraph = (ZedGraphControl)Host.Child;
+            ZedGraphControl zedGraph = (ZedGraphControl) Host.Child;
             GraphPane pane = zedGraph.GraphPane;
             drawSettings(zedGraph);
             myCurve = pane.AddJapaneseCandleStick("", stockPointList);
@@ -107,7 +106,10 @@ namespace Technical_Analysis
             {
                 list.Add((XDate) arrayForDataGrid[i].Item1, ma[i]);
                 list2.Add((XDate) arrayForDataGrid[i].Item1, arrayForDataGrid[i].Item3);
-                if (Math.Abs(ma[i] - arrayForDataGrid[i].Item3) < 0.05 && Math.Abs(Math.Abs(macd[i] - arrayForDataGrid[i].Item3)) > 0.0) lines.Add(i+1);
+
+                if (Math.Abs(ma[i] - arrayForDataGrid[i].Item3) < 0.05 &&
+                    Math.Abs(Math.Abs(macd[i] - arrayForDataGrid[i].Item3)) > 0.0)
+                    lines.Add(i + 1);
             }
 
             ZedGraphControl zedGraphSMA = (ZedGraphControl) HostMA.Child;
@@ -134,39 +136,27 @@ namespace Technical_Analysis
 
             for (int i = 0; i < arrayForDataGrid.Count; i++)
             {
-                list.Add((XDate)arrayForDataGrid[i].Item1, macd[i]);
-                list2.Add((XDate)arrayForDataGrid[i].Item1, expMACD[i]);
-                if (Math.Abs(macd[i] - expMACD[i]) < 0.05 && Math.Abs(Math.Abs(macd[i] - expMACD[i])) > 0.0) lines.Add(i+1);
+                list.Add((XDate) arrayForDataGrid[i].Item1, macd[i]);
+                list2.Add((XDate) arrayForDataGrid[i].Item1, expMACD[i]);
+
+                if (Math.Abs(macd[i] - expMACD[i]) < 0.05 && Math.Abs(Math.Abs(macd[i] - expMACD[i])) > 0.0)
+                    lines.Add(i + 1);
             }
 
-            ZedGraphControl zedGraphMACD = (ZedGraphControl)Host4.Child;
+            ZedGraphControl zedGraphMACD = (ZedGraphControl) Host4.Child;
             zedGraphMACD.GraphPane = new GraphPane();
             drawSettings(zedGraphMACD);
             GraphPane pane2 = zedGraphMACD.GraphPane;
             LineItem stickItem = pane2.AddCurve("MACD", list, Color.Crimson, SymbolType.None);
             paneSettings(pane2);
             stickItem.Color = Color.Crimson;
-            LineItem stickItem2 = pane2.AddCurve("экспоненциальная средняя MACD", list2, Color.Green, SymbolType.None); //экспоненц средняя MACD
+            LineItem stickItem2 =
+                pane2.AddCurve("экспоненциальная средняя MACD", list2, Color.Green,
+                    SymbolType.None); //экспоненц средняя MACD
             stickItem2.Color = Color.Green;
             drawCommonPoints(pane2, lines);
             zedGraphMACD.AxisChange();
             zedGraphMACD.Invalidate();
-        }
-
-        private static void drawCommonPoints(GraphPane pane2, List<double> n)
-        {
-            for (int i = 0; i < n.Count; i++)
-            {
-                var line = new LineObj(Color.OrangeRed, n[i], 0, n[i], 1);
-
-                line.Location.CoordinateFrame = CoordType.XScaleYChartFraction; 
-                line.IsClippedToChartRect = true;
-
-                //line.Line.Style = System.Drawing.Drawing2D.DashStyle.Dash;
-                line.Line.Width = 1f;
-
-                pane2.GraphObjList.Add(line);
-            }
         }
 
         private void drawOBV()
@@ -177,7 +167,7 @@ namespace Technical_Analysis
             for (int i = 0; i < arrayForDataGrid.Count; i++)
             {
                 list.Add((XDate) arrayForDataGrid[i].Item1, obv[i]);
-                list2.Add((XDate)arrayForDataGrid[i].Item1, expOBV[i]);
+                list2.Add((XDate) arrayForDataGrid[i].Item1, expOBV[i]);
             }
 
             ZedGraphControl zedGraphOBV = (ZedGraphControl) Host5.Child;
@@ -187,7 +177,9 @@ namespace Technical_Analysis
             StickItem stickItem = pane2.AddStick("OBV", list, Color.Crimson);
             paneSettings(pane2);
             stickItem.Color = Color.Crimson;
-            LineItem stickItem2 = pane2.AddCurve("экспоненциальная средняя OBV", list2, Color.Green, SymbolType.None); //экспоненц средняя OBV
+            LineItem stickItem2 =
+                pane2.AddCurve("экспоненциальная средняя OBV", list2, Color.Green,
+                    SymbolType.None); //экспоненц средняя OBV
             stickItem2.Color = Color.Green;
             zedGraphOBV.AxisChange();
             zedGraphOBV.Invalidate();
@@ -210,8 +202,8 @@ namespace Technical_Analysis
             LineItem stickItem = pane2.AddCurve("RSI", list, Color.Crimson, SymbolType.None);
             paneSettings(pane2);
             double minOBV = 30;
-            LineObj line1 = new LineObj (0, minOBV, list.Count, minOBV);
-            
+            LineObj line1 = new LineObj(0, minOBV, list.Count, minOBV);
+
             double maxOBV = 70;
             LineObj line2 = new LineObj(0, maxOBV, list.Count, maxOBV);
             pane2.GraphObjList.Add(line1);
@@ -219,6 +211,21 @@ namespace Technical_Analysis
             stickItem.Color = Color.Crimson;
             zedGraphRSI.AxisChange();
             zedGraphRSI.Invalidate();
+        }
+
+        private static void drawCommonPoints(GraphPane pane2, List<double> n)
+        {
+            for (int i = 0; i < n.Count; i++)
+            {
+                var line = new LineObj(Color.Indigo, n[i], 0, n[i], 1);
+
+                line.Location.CoordinateFrame = CoordType.XScaleYChartFraction;
+                line.IsClippedToChartRect = true;
+
+                line.Line.Width = 1f;
+
+                pane2.GraphObjList.Add(line);
+            }
         }
 
         private static void paneSettings(GraphPane pane)
