@@ -107,10 +107,6 @@ namespace Technical_Analysis
             {
                 list.Add((XDate) arrayForDataGrid[i].Item1, ma[i]);
                 list2.Add((XDate) arrayForDataGrid[i].Item1, arrayForDataGrid[i].Item3);
-
-                //if (Math.Abs(ma[i] - arrayForDataGrid[i].Item3) < 0.05 &&
-                //    Math.Abs(Math.Abs(macd[i] - arrayForDataGrid[i].Item3)) > 0.0)
-                //    lines.Add(i + 1);
             }
 
             for (int i = 1; i < arrayForDataGrid.Count; i++)
@@ -146,9 +142,6 @@ namespace Technical_Analysis
             {
                 list.Add((XDate) arrayForDataGrid[i].Item1, macd[i]);
                 list2.Add((XDate) arrayForDataGrid[i].Item1, expMACD[i]);
-
-                //if (Math.Abs(macd[i] - expMACD[i]) < 0.05 && Math.Abs(Math.Abs(macd[i] - expMACD[i])) > 0.0)
-                //    lines.Add(i + 1);
             }
 
             for (int i = 1; i < arrayForDataGrid.Count; i++)
@@ -254,7 +247,7 @@ namespace Technical_Analysis
             pane.Fill = new Fill(Color.White, Color.FromArgb(220, 220, 255), 45.0f);
             pane.XAxis.Type = AxisType.DateAsOrdinal;
             pane.Y2Axis.Type = AxisType.DateAsOrdinal;
-            pane.X2Axis.IsVisible = true;
+            //pane.X2Axis.IsVisible = true;
             pane.X2Axis.Scale.Min = 0;
             pane.X2Axis.Scale.Max = arrayForDataGrid.Count;
             pane.X2Axis.MajorGrid.IsVisible = true;
