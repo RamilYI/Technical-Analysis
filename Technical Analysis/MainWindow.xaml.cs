@@ -101,15 +101,22 @@ namespace Technical_Analysis
         {
             StockPointList list = new StockPointList();
             StockPointList list2 = new StockPointList();
-            List<double> lines = new List<double>();
+            List<double> Buylines = new List<double>();
+            List<double> Selllines = new List<double>();
             for (int i = 0; i < arrayForDataGrid.Count; i++)
             {
                 list.Add((XDate) arrayForDataGrid[i].Item1, ma[i]);
                 list2.Add((XDate) arrayForDataGrid[i].Item1, arrayForDataGrid[i].Item3);
 
-                if (Math.Abs(ma[i] - arrayForDataGrid[i].Item3) < 0.05 &&
-                    Math.Abs(Math.Abs(macd[i] - arrayForDataGrid[i].Item3)) > 0.0)
-                    lines.Add(i + 1);
+                //if (Math.Abs(ma[i] - arrayForDataGrid[i].Item3) < 0.05 &&
+                //    Math.Abs(Math.Abs(macd[i] - arrayForDataGrid[i].Item3)) > 0.0)
+                //    lines.Add(i + 1);
+            }
+
+            for (int i = 1; i < arrayForDataGrid.Count; i++)
+            {
+                if (ma[i - 1] > arrayForDataGrid[i-1].Item3 && ma[i] < arrayForDataGrid[i].Item3) Buylines.Add(i);
+                else if (ma[i - 1] < arrayForDataGrid[i - 1].Item3 && macd[i] > arrayForDataGrid[i].Item3) Selllines.Add(i);
             }
 
             ZedGraphControl zedGraphSMA = (ZedGraphControl) HostMA.Child;
@@ -121,7 +128,7 @@ namespace Technical_Analysis
             stickItem.Color = Color.Crimson;
             stickitem2.Color = Color.ForestGreen;
             paneSettings(pane2);
-            drawCommonPoints(pane2, lines);
+            drawCommonPoints(pane2, Buylines, Selllines);
             zedGraphSMA.AxisChange();
             zedGraphSMA.Invalidate();
             zedGraphSMA.Refresh();
@@ -132,15 +139,22 @@ namespace Technical_Analysis
             StockPointList list = new StockPointList();
             StockPointList list2 = new StockPointList();
             double[] expMACD = Indicators.EMA(macd, 10);
-            List<double> lines = new List<double>();
+            List<double> Buylines = new List<double>();
+            List<double> Selllines = new List<double>();
 
             for (int i = 0; i < arrayForDataGrid.Count; i++)
             {
                 list.Add((XDate) arrayForDataGrid[i].Item1, macd[i]);
                 list2.Add((XDate) arrayForDataGrid[i].Item1, expMACD[i]);
 
-                if (Math.Abs(macd[i] - expMACD[i]) < 0.05 && Math.Abs(Math.Abs(macd[i] - expMACD[i])) > 0.0)
-                    lines.Add(i + 1);
+                //if (Math.Abs(macd[i] - expMACD[i]) < 0.05 && Math.Abs(Math.Abs(macd[i] - expMACD[i])) > 0.0)
+                //    lines.Add(i + 1);
+            }
+
+            for (int i = 1; i < arrayForDataGrid.Count; i++)
+            {
+                if (macd[i-1] > expMACD[i-1] && macd[i] < expMACD[i] ) Buylines.Add(i);
+                else if (macd[i - 1] < expMACD[i - 1] && macd[i] > expMACD[i]) Selllines.Add(i);
             }
 
             ZedGraphControl zedGraphMACD = (ZedGraphControl) Host4.Child;
@@ -154,7 +168,7 @@ namespace Technical_Analysis
                 pane2.AddCurve("экспоненциальная средняя MACD", list2, Color.Green,
                     SymbolType.None); //экспоненц средняя MACD
             stickItem2.Color = Color.Green;
-            drawCommonPoints(pane2, lines);
+            drawCommonPoints(pane2, Buylines, Selllines);
             zedGraphMACD.AxisChange();
             zedGraphMACD.Invalidate();
         }
@@ -213,11 +227,17 @@ namespace Technical_Analysis
             zedGraphRSI.Invalidate();
         }
 
-        private static void drawCommonPoints(GraphPane pane2, List<double> n)
+        private static void drawCommonPoints(GraphPane pane2, List<double> buy, List<double> sell)
+        {
+            drawBuyAndSellSignals(pane2, buy, Color.Indigo);
+            drawBuyAndSellSignals(pane2, sell, Color.DarkOrange);
+        }
+
+        private static void drawBuyAndSellSignals(GraphPane pane2, List<double> n, Color color)
         {
             for (int i = 0; i < n.Count; i++)
             {
-                var line = new LineObj(Color.Indigo, n[i], 0, n[i], 1);
+                var line = new LineObj(color, n[i], 0, n[i], 1);
 
                 line.Location.CoordinateFrame = CoordType.XScaleYChartFraction;
                 line.IsClippedToChartRect = true;
